@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SkillsPassport | The Future of Credentials</title>
+    <meta name="description" content="SkillsPassport — DAO governed, ZK-enabled credentialing. Verifiable, privacy-preserving credentials for learners and institutions." />
+    <meta property="og:title" content="SkillsPassport | The Future of Credentials" />
+    <meta property="og:description" content="DAO governed, ZK-enabled credentialing for verifiable skills." />
+    <link rel="manifest" href="manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div id="preloader" role="status" aria-live="polite">
+        <div class="loader-content" aria-hidden="true">
+            <i class="fa-solid fa-passport fa-spin" aria-hidden="true"></i>
+            <h3>Loading SkillsPassport...</h3>
+        </div>
+    </div>
+
+    <!-- TOP SCROLL PROGRESS -->
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- CRYPTO TICKER -->
+    <div class="crypto-ticker" aria-hidden="true">
+        <div class="ticker-track" id="tickerTrack">
+            <span>🚀 ETH Gas: 12 Gwei</span>
+            <span>⚡ Polygon Gas: 30 Gwei</span>
+            <span>🔥 500+ Credentials Minted Today</span>
+            <span>💎 New Partner: TechUniversity joined the DAO</span>
+        </div>
+    </div>
+
+    <!-- HEADER / NAV -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo" aria-label="SkillsPassport logo">
+                <i class="fa-solid fa-passport" aria-hidden="true"></i>
+                <span>SkillsPassport</span>
+            </div>
+
+            <div class="search-bar" id="searchBar">
+                <i class="fa-solid fa-search" aria-hidden="true"></i>
+                <input id="credentialSearch" type="text" placeholder="Verify Credential ID..." aria-label="Verify Credential ID" />
+                <button id="copySearchBtn" class="icon-btn" title="Copy ID" aria-label="Copy credential ID"><i class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <nav role="navigation" aria-label="Main Navigation">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="themeToggle" class="icon-btn" aria-pressed="false" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+                <button id="connectWalletBtn" class="btn btn-primary">Connect Wallet</button>
+                <button id="mobileToggle" class="mobile-toggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+
+        <!-- MOBILE PANEL -->
+        <div id="mobileNav" class="mobile-nav" aria-hidden="true">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <main>
+    <section id="home" class="hero">
+        <div class="blob blob-1" aria-hidden="true"></div>
+        <div class="blob blob-2" aria-hidden="true"></div>
+
+        <div class="container hero-content fade-in">
+            <h1>Credentials that are <br> 
+                <span class="typewriter" data-text='["Verifiable.", "Unforgeable.", "Yours Forever."]'></span>
+            </h1>
+            <p class="lead">The first DAO-governed accreditation system using Zero-Knowledge Proofs to validate skills without compromising privacy.</p>
+
+            <div class="cta-group">
+                <a href="#features" class="btn btn-primary">Launch App</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="fa-brands fa-github" aria-hidden="true"></i> Whitepaper</a>
+            </div>
+
+            <div class="tech-stack" aria-hidden="true">
+                <span>Powered by:</span>
+                <i class="fa-brands fa-ethereum" title="Ethereum" aria-hidden="true"></i>
+                <i class="fa-solid fa-cube" title="IPFS" aria-hidden="true"></i>
+                <i class="fa-solid fa-shield-halved" title="Zk-Snarks" aria-hidden="true"></i>
+                <i class="fa-brands fa-react" title="React" aria-hidden="true"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="container grid-4">
+            <div class="stat-item" data-target="15000">
+                <h3>0</h3>
+                <p>Credentials Issued</p>
+            </div>
+            <div class="stat-item" data-target="120">
+                <h3>0</h3>
+                <p>Universities</p>
+            </div>
+            <div class="stat-item" data-target="5000">
+                <h3>0</h3>
+                <p>ETH Saved</p>
+            </div>
+            <div class="stat-item" data-target="100">
+                <h3>0%</h3>
+                <p>Privacy Preserved</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="section-padding">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>The Ecosystem</h2>
+                <p>Complete Web3 infrastructure for Education.</p>
+            </div>
+
+            <div class="controls">
+                <label for="featureFilter">Filter:</label>
+                <select id="featureFilter" aria-label="Filter features">
+                    <option value="all">All</option>
+                    <option value="student">Student</option>
+                    <option value="issuer">Issuer</option>
+                    <option value="verifier">Verifier</option>
+                </select>
+            </div>
+
+            <div class="grid-3" id="featureGrid">
+                <!-- card 1 -->
+                <a href="student.html" class="feature-card tilt-card fade-in" data-type="student">
+                    <div class="card-content">
+                        <div class="icon-box"><i class="fa-solid fa-id-card" aria-hidden="true"></i></div>
+                        <h3>Student Passport</h3>
+                        <p>Unified wallet interface. Store degrees, badges, and certificates permanently on IPFS.</p>
+                    </div>
+                </a>
+
+                <!-- card 2 -->
+                <a href="issuer.html" class="feature-card tilt-card fade-in" data-type="issuer">
+                    <div class="card-content">
+                        <div class="icon-box"><i class="fa-solid fa-landmark" aria-hidden="true"></i></div>
+                        <h3>Issuer Portal</h3>
+                        <p>Dashboard for Universities to mint Soulbound Tokens (SBTs) directly to students.</p>
+                    </div>
+                </a>
+
+                <!-- card 3 -->
+                <a href="verifier.html" class="feature-card tilt-card fade-in" data-type="verifier">
+                    <div class="card-content">
+                        <div class="icon-box"><i class="fa-solid fa-check-double" aria-hidden="true"></i></div>
+                        <h3>Instant Verifier</h3>
+                        <p>Employers can verify skills in 0.5s without contacting the university.</p>
+                    </div>
+                </a>
+
+                <!-- more demo cards -->
+                <div class="feature-card tilt-card fade-in" data-type="tech">
+                    <span class="badge adv">ZKP Tech</span>
+                    <div class="card-content">
+                        <div class="icon-box"><i class="fa-solid fa-mask" aria-hidden="true"></i></div>
+                        <h3>Zero-Knowledge Proofs</h3>
+                        <p>Prove attributes without revealing personal data.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card tilt-card fade-in" data-type="gov">
+                    <span class="badge adv">DAO</span>
+                    <div class="card-content">
+                        <div class="icon-box"><i class="fa-solid fa-gavel" aria-hidden="true"></i></div>
+                        <h3>Governance DAO</h3>
+                        <p>Community voting to approve institutions & reduce fraud.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card tilt-card fade-in" data-type="contract">
+                    <span class="badge adv">Smart Contracts</span>
+                    <div class="card-content">
+                        <div class="icon-box"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i></div>
+                        <h3>Expirable Credentials</h3>
+                        <p>Auto-revoking NFTs for time-limited certifications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap" class="section-padding">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Project Roadmap</h2>
+            </div>
+            <div class="timeline" aria-hidden="false">
+                <div class="timeline-item left fade-in">
+                    <div class="content">
+                        <h3>Q1 2025</h3>
+                        <p>MVP Launch, Smart Contract Audits, First University Partnership.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right fade-in">
+                    <div class="content">
+                        <h3>Q2 2025</h3>
+                        <p>Beta Release of Student Wallet, Mobile App Development.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left fade-in">
+                    <div class="content">
+                        <h3>Q3 2025</h3>
+                        <p>Governance DAO Launch, Token Airdrop for early adopters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-padding bg-alt" id="faq">
+        <div class="container small-container">
+            <div class="section-title fade-in">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item fade-in">
+                    <button class="accordion-header" aria-expanded="false">Is this built on Ethereum? <i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    <div class="accordion-body">Yes, but we also support L2 solutions like Polygon and Arbitrum to minimize gas fees for students.</div>
+                </div>
+                <div class="accordion-item fade-in">
+                    <button class="accordion-header" aria-expanded="false">Can I hide my grades? <i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    <div class="accordion-body">Absolutely. Using ZK-Snarks, you can choose exactly what data to reveal to an employer.</div>
+                </div>
+                <div class="accordion-item fade-in">
+                    <button class="accordion-header" aria-expanded="false">What if I lose my wallet? <i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    <div class="accordion-body">We are implementing Social Recovery wallets allowing trusted guardians to help you recover access.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3>SkillsPassport</h3>
+                    <p>Decentralizing the future of education.</p>
+                    <div class="social-icons" aria-label="Social links">
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <a href="#">Student Wallet</a>
+                    <a href="#">Issuer Portal</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+                <div class="footer-subscribe">
+                    <h4>Stay Updated</h4>
+                    <form id="newsletterForm" class="newsletter-form" aria-label="Subscribe to newsletter">
+                        <label for="newsletterEmail" class="sr-only">Email</label>
+                        <input id="newsletterEmail" type="email" placeholder="Enter email" required>
+                        <button type="submit" class="btn btn-primary" aria-label="Subscribe"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 SkillsPassport. Built for the Hackathon.
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <a href="#home" class="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+
+    <!-- CONNECT WALLET MODAL -->
+    <div id="walletModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="walletModalTitle">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="walletModalTitle">Connect Wallet</h2>
+            <p>Select a wallet provider for testing (simulated)</p>
+            <div class="wallet-options">
+                <button class="btn wallet-btn" data-wallet="metamask">MetaMask</button>
+                <button class="btn wallet-btn" data-wallet="walletconnect">WalletConnect</button>
+                <button class="btn wallet-btn" data-wallet="phantom">Phantom (Solana)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- COOKIE CONSENT -->
+    <div id="cookieBar" class="cookie-bar" role="region" aria-live="polite" aria-hidden="true">
+        <p>We use cookies for analytics and to improve the experience. <button id="acceptCookies" class="btn">Accept</button></p>
+    </div>
+
+    <!-- LIVE REGION for toasts -->
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js"></script>
+    </main>
+</body>
+</html>

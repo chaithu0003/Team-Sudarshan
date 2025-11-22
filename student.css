@@ -1,0 +1,280 @@
+/* ============================================================================
+   student.css  — Styles for Student Dashboard (SkillsPassport)
+   - Includes extra features: responsive sidebar, dark mode, tab animations,
+     progress bars, badges, toast container, modal, skeleton loader, print rules
+   ============================================================================ */
+
+/* -----------------------------
+   1. VARIABLES & RESET
+   ----------------------------- */
+:root{
+  --primary: #6366f1;
+  --primary-600: #4f46e5;
+  --accent: #f43f5e;
+  --success: #10b981;
+  --muted: #64748b;
+
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --glass: rgba(255,255,255,0.7);
+  --border: rgba(15,23,42,0.06);
+  --text: #0f172a;
+
+  --shadow-sm: 0 6px 18px rgba(11,22,40,0.06);
+  --shadow-lg: 0 30px 60px rgba(11,22,40,0.08);
+
+  --radius: 14px;
+  --max-width: 1200px;
+  --gap: 18px;
+  --transition: 240ms cubic-bezier(.2,.9,.2,1);
+  --z-top: 1200;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"]{
+  --primary: #818cf8;
+  --primary-600: #6366f1;
+  --accent: #fb7185;
+  --success: #34d399;
+  --muted: #94a3b8;
+
+  --bg: #0f172a;
+  --card: #0b1220;
+  --glass: rgba(15,23,42,0.6);
+  --border: rgba(255,255,255,0.06);
+  --text: #e6eef8;
+
+  --shadow-sm: 0 8px 20px rgba(2,6,23,0.5);
+  --shadow-lg: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+/* Basic reset */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+}
+
+/* Utility containers */
+.container{max-width:var(--max-width);margin:0 auto;padding:18px}
+.flex-between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+/* Accessible focus outline */
+:focus{outline: 3px solid rgba(99,102,241,0.18); outline-offset:2px}
+
+/* -----------------------------
+   2. HEADER & NAV
+   ----------------------------- */
+header{
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  position:sticky; top:0; z-index:var(--z-top);
+}
+
+.logo a{
+  display:inline-flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; font-weight:700;
+}
+.logo i{ color:var(--primary) }
+
+/* nav-links area */
+.nav-links{display:flex;align-items:center;gap:12px}
+
+/* theme toggle */
+.theme-toggle{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:10px; cursor:pointer;
+  background:transparent; border:1px solid transparent; transition:all var(--transition);
+}
+.theme-toggle:hover{ transform:translateY(-3px); box-shadow:var(--shadow-sm); }
+
+/* connect wallet */
+.btn{border-radius:10px;padding:8px 12px;border:1px solid var(--border);background:var(--card); cursor:pointer}
+.btn-outline{background:transparent;border:1px solid var(--border); color:var(--text)}
+.btn-sm{padding:6px 10px;font-size:.9rem}
+
+/* -----------------------------
+   3. LAYOUT (GRID & SIDEBAR)
+   ----------------------------- */
+.dashboard-grid{
+  display:grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(16px, 2.5vw, 28px);
+  align-items:start;
+  padding:22px 18px;
+}
+
+/* Responsive collapse */
+@media (max-width: 900px){
+  .dashboard-grid{ grid-template-columns: 1fr; }
+}
+
+/* Sidebar */
+.sidebar{
+  background:var(--card);
+  border-radius:12px;
+  padding:18px;
+  border:1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  height:fit-content;
+  position:sticky; top:86px;
+}
+
+/* Profile */
+.user-profile{ text-align:center; margin-bottom:16px }
+.avatar{
+  width:84px; height:84px; border-radius:18px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(14,165,233,0.06));
+  display:inline-flex; align-items:center; justify-content:center; font-size:2rem; color:var(--primary);
+  margin:0 auto 10px;
+}
+.user-profile h3{margin:6px 0 4px;font-size:1.05rem}
+.user-profile .text-muted{color:var(--muted);font-size:.9rem}
+
+/* Tabs */
+.tab-btn{
+  display:flex; align-items:center; gap:10px; width:100%;
+  padding:10px 12px; border-radius:10px; background:transparent; border:none; text-align:left;
+  cursor:pointer; font-weight:700; margin-bottom:8px; color:var(--text);
+  transition: background var(--transition), transform var(--transition);
+}
+.tab-btn:hover{ background: rgba(99,102,241,0.04); transform: translateX(4px); }
+.tab-btn.active{ background: linear-gradient(90deg, rgba(99,102,241,0.09), rgba(14,165,233,0.03)); box-shadow: var(--shadow-sm); color:var(--primary) }
+
+/* -----------------------------
+   4. MAIN & CARDS
+   ----------------------------- */
+main{ min-height: 60vh; }
+
+.tab-content{ display:none; transition: opacity .28s ease, transform .28s ease; opacity:0; transform:translateY(8px) }
+.tab-content.active{ display:block; opacity:1; transform:none }
+
+/* dash card */
+.dash-card{
+  background:var(--card);
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:18px;
+  border:1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.dash-card:hover{ transform: translateY(-6px); box-shadow: var(--shadow-lg) }
+
+/* small helper classes */
+.flex-row{ display:flex; align-items:center; gap:12px }
+.small{ font-size:.9rem }
+
+/* Skill progress bars */
+.skill-bar-container{ margin-bottom:14px; }
+.skill-info{ display:flex; justify-content:space-between; font-weight:700; margin-bottom:8px; color:var(--text) }
+.progress-bg{
+  background: linear-gradient(90deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02));
+  border-radius:10px; height:12px; overflow:hidden; border:1px solid var(--border);
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius:10px;
+  transition: width 900ms cubic-bezier(.2,.9,.2,1);
+  box-shadow: 0 6px 18px rgba(99,102,241,0.12) inset;
+}
+
+/* Add subtle percent bubble */
+.skill-info span:last-child{ color:var(--muted); font-weight:600 }
+
+/* Recent activity list */
+.dash-card ul{ list-style:none; padding-left:0; margin:0 }
+.dash-card li{ padding:10px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px }
+.dash-card li i{ margin-right:8px }
+
+/* -----------------------------
+   5. CREDENTIALS CARD
+   ----------------------------- */
+.badge{ display:inline-block; padding:6px 10px; border-radius:999px; font-weight:800; font-size:.78rem; background:rgba(16,185,129,0.12); color:var(--success) }
+.badge-success{ background: rgba(16,185,129,0.12); color:var(--success) }
+
+/* Example credential card layout */
+.dash-card .credential-head{ display:flex; align-items:center; gap:16px; justify-content:space-between }
+.dash-card .credential-head .meta{ display:flex; gap:12px; align-items:center }
+
+/* -----------------------------
+   6. SETTINGS (toggles)
+   ----------------------------- */
+input[type="checkbox"]{ width:20px; height:20px; accent-color:var(--primary); }
+
+/* -----------------------------
+   7. EXTRA UI: Toast, Modal, Skeleton
+   ----------------------------- */
+
+/* Toast container */
+#toast-container{
+  position:fixed; left:20px; bottom:20px; z-index:1400; display:flex; flex-direction:column; gap:8px;
+}
+.toast{
+  background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow:var(--shadow-lg);
+  border-left:4px solid var(--primary);
+}
+
+/* Modal (hidden by default) */
+.modal{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1500;
+  background: rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity var(--transition);
+}
+.modal[aria-hidden="false"]{ opacity:1; pointer-events:auto }
+.modal .modal-panel{ background:var(--card); padding:20px; border-radius:12px; width:min(720px,92%); box-shadow:var(--shadow-lg); border:1px solid var(--border) }
+
+/* Skeleton loader (for async content) */
+.skeleton{
+  background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.06), rgba(0,0,0,0.04));
+  border-radius:8px; min-height:12px; animation: shimmer 1.2s linear infinite;
+}
+@keyframes shimmer{ 0%{background-position:-200px 0} 100%{background-position:200px 0} }
+
+/* -----------------------------
+   8. PRINT RULES
+   ----------------------------- */
+@media print{
+  header, .btn, .tab-btn, #toast-container, .modal { display:none !important; }
+  body{ background:white; color:black; }
+  .dash-card{ border:0 !important; box-shadow:none !important }
+}
+
+/* -----------------------------
+   9. RESPONSIVE TWEAKS
+   ----------------------------- */
+@media (max-width: 900px){
+  .sidebar{ position:relative; top:auto; margin-bottom:12px }
+  .avatar{ width:72px; height:72px; font-size:1.6rem }
+}
+
+/* -----------------------------
+   10. SMALL HELPERS
+   ----------------------------- */
+.muted{ color:var(--muted); font-size:.95rem }
+.center{ text-align:center }
+.pulse{ animation: pulseAnim 2s infinite; }
+@keyframes pulseAnim{ 0%{opacity:1}50%{opacity:.6}100%{opacity:1} }
+
+/* -----------------------------
+   Usage notes (not CSS):
+   - To animate progress bars: run JS that does:
+       document.querySelectorAll('.progress-fill').forEach(el=> el.style.width = el.dataset.width);
+   - For tab switching: toggle classes .active on .tab-btn and .tab-content (JS)
+   - For toast: append <div class="toast">..</div> into #toast-container
+   - For dark-mode toggle: set document.documentElement.setAttribute('data-theme','dark')
+   ----------------------------- */
+.skill-info span:last-child {
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  
+
+}

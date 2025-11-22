@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App | SkillsPassport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css"> <style>
+        /* --- DASHBOARD SPECIFIC CSS --- */
+        body { background-color: #f1f5f9; }
+        
+        /* Tab Navigation */
+        .dashboard-nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        .tab-btn:hover { color: var(--primary); }
+
+        /* Views */
+        .view-section {
+            display: none; /* Hidden by default */
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        .view-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 1. STUDENT WALLET STYLES --- */
+        .wallet-header {
+            background: var(--gradient);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+        .wallet-info h2 { color: white; margin-bottom: 5px; }
+        .wallet-address { background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 50px; font-size: 0.9rem; }
+        
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .credential-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+        .cred-img {
+            height: 140px;
+            background: #e0e7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+        .cred-body { padding: 20px; }
+        .cred-badge {
+            position: absolute; top: 10px; right: 10px;
+            background: #dcfce7; color: #166534; padding: 4px 10px;
+            border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+        }
+
+        /* --- 2. ISSUER FORM STYLES --- */
+        .issuer-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus { border-color: var(--primary); outline: none; }
+
+        /* --- 3. VERIFIER STYLES --- */
+        .verifier-container {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .search-box {
+            position: relative;
+            margin-top: 30px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border-radius: 50px;
+            border: 2px solid #e2e8f0;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+        .search-btn {
+            position: absolute; right: 10px; top: 10px;
+            height: 48px; width: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+        .search-btn:hover { transform: scale(1.1); }
+        
+        /* Verification Result Popup */
+        .verification-result {
+            margin-top: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #22c55e;
+            box-shadow: var(--shadow);
+            display: none; /* Hidden by default */
+            text-align: left;
+        }
+        .verified-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: #166534; background: #dcfce7;
+            padding: 5px 15px; border-radius: 50px; font-weight: 700; margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fa-solid fa-passport"></i> SkillsPassport <span style="font-size: 0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:5px; margin-left:10px; color:#64748B;">APP DEMO</span>
+                </div>
+                <div>
+                    <button class="btn btn-primary" style="padding: 8px 15px; font-size: 0.85rem;"><i class="fa-solid fa-wallet"></i> 0x71C...3A9</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard-nav">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('student')">Student Wallet</button>
+            <button class="tab-btn" onclick="switchTab('issuer')">Issuer Portal</button>
+            <button class="tab-btn" onclick="switchTab('verifier')">Verifier Tool</button>
+        </div>
+    </div>
+
+    <div id="student" class="view-section active">
+        <div class="wallet-header">
+            <div class="wallet-info">
+                <h2>Hello, Rahul</h2>
+                <p>Computer Science Undergraduate</p>
+            </div>
+            <div class="wallet-details">
+                <span class="wallet-address"><i class="fa-brands fa-ethereum"></i> 0x71C...3A9</span>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 20px;">Your Credentials (NFTs)</h3>
+        <div class="credentials-grid" id="credentialList">
+            <div class="credential-card">
+                <div class="cred-badge">Verified On-Chain</div>
+                <div class="cred-img"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="cred-body">
+                    <h4>B.Tech Computer Science</h4>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">Issued by: <strong>IIT Bombay</strong></p>
+                    <p style="color: var(--text-light); font-size: 0.8rem; margin-top:10px;">Issued: Aug 2025</p>
+                    <button class="btn btn-outline" style="width:100%; margin-left:0; margin-top:15px; font-size:0.85rem;">View Proof</button>
+                </div>
+            </div>
+            <div class="credential-card">
+                <div class="cred-badge">Verified On-Chain</div>
+                <div class="cred-img"><i class="fa-brands fa-java"></i></div>
+                <div class="cred-body">
+                    <h4>Java Masterclass</h4>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">Issued by: <strong>Udemy</strong></p>
+                    <p style="color: var(--text-light); font-size: 0.8rem; margin-top:10px;">Issued: Sept 2025</p>
+                    <button class="btn btn-outline" style="width:100%; margin-left:0; margin-top:15px; font-size:0.85rem;">View Proof</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="issuer" class="view-section">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2>Issue New Credential</h2>
+            <p style="color: var(--text-light);">Mint a soulbound token (SBT) to a student's wallet.</p>
+        </div>
+        
+        <div class="issuer-container">
+            <form id="issueForm">
+                <div class="form-group">
+                    <label>Student Wallet Address</label>
+                    <input type="text" class="form-control" placeholder="0x..." required>
+                </div>
+                <div class="form-group">
+                    <label>Credential Title</label>
+                    <input type="text" id="credTitle" class="form-control" placeholder="e.g. Data Structures Certification" required>
+                </div>
+                <div class="form-group">
+                    <label>Issuing Organization</label>
+                    <input type="text" id="credOrg" class="form-control" placeholder="University Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Expiry Date (Optional)</label>
+                    <input type="date" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Mint Credential</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="verifier" class="view-section">
+        <div class="verifier-container">
+            <h2>Verify a Credential</h2>
+            <p style="color: var(--text-light);">Enter the Credential ID or Transaction Hash to verify authenticity.</p>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Paste Credential ID (e.g. 0x82...91)">
+                <button class="search-btn" onclick="verifyCredential()"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div id="verifyResult" class="verification-result">
+                <div class="verified-badge"><i class="fa-solid fa-circle-check"></i> Valid Credential</div>
+                <h3>B.Tech Computer Science</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; font-size: 0.9rem;">
+                    <div>
+                        <span style="display:block; color:var(--text-light);">Issued To:</span>
+                        <strong>Rahul (0x71C...3A9)</strong>
+                    </div>
+                    <div>
+                        <span style="display:block; color:var(--text-light);">Issued By:</span>
+                        <strong>IIT Bombay</strong>
+                    </div>
+                    <div>
+                        <span style="display:block; color:var(--text-light);">Timestamp:</span>
+                        22 Aug 2025
+                    </div>
+                    <div>
+                        <span style="display:block; color:var(--text-light);">Blockchain:</span>
+                        Polygon Mainnet
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Tab Switching Logic
+        function switchTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Show selected
+            document.getElementById(tabName).classList.add('active');
+            
+            // Highlight button (find the button that triggered this or by index)
+            // Simplified loop to find button by text content or onclick attr would be cleaner, 
+            // but for this demo, we update classes based on the clicked element passed implicitly? 
+            // Actually, let's just loop buttons to match the click.
+            const buttons = document.querySelectorAll('.tab-btn');
+            if(tabName === 'student') buttons[0].classList.add('active');
+            if(tabName === 'issuer') buttons[1].classList.add('active');
+            if(tabName === 'verifier') buttons[2].classList.add('active');
+        }
+
+        // 2. Mock Issue Credential
+        document.getElementById('issueForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('credTitle').value;
+            const org = document.getElementById('credOrg').value;
+
+            // Simulate loading
+            const btn = this.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Minting on Blockchain...";
+            
+            setTimeout(() => {
+                alert(`Success! "${title}" has been issued to the wallet.`);
+                
+                // OPTIONAL: Add it to the student list dynamically for the demo
+                const grid = document.getElementById('credentialList');
+                const newCard = `
+                <div class="credential-card fade-in" style="animation: fadeIn 0.5s">
+                    <div class="cred-badge">Just Added</div>
+                    <div class="cred-img"><i class="fa-solid fa-certificate"></i></div>
+                    <div class="cred-body">
+                        <h4>${title}</h4>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">Issued by: <strong>${org}</strong></p>
+                        <p style="color: var(--text-light); font-size: 0.8rem; margin-top:10px;">Issued: Just now</p>
+                        <button class="btn btn-outline" style="width:100%; margin-left:0; margin-top:15px; font-size:0.85rem;">View Proof</button>
+                    </div>
+                </div>`;
+                grid.innerHTML += newCard;
+
+                btn.innerText = originalText;
+                this.reset();
+                switchTab('student'); // Go back to student view to see it
+            }, 1500);
+        });
+
+        // 3. Mock Verification
+        function verifyCredential() {
+            const resultBox = document.getElementById('verifyResult');
+            const input = document.querySelector('.search-input');
+            
+            if(input.value.length > 5) {
+                // Fake processing
+                input.disabled = true;
+                document.querySelector('.search-btn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                
+                setTimeout(() => {
+                    resultBox.style.display = 'block';
+                    resultBox.style.animation = 'fadeIn 0.5s ease';
+                    input.disabled = false;
+                    document.querySelector('.search-btn').innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+                }, 1000);
+            } else {
+                alert("Please enter a valid ID");
+            }
+        }
+    </script>
+</body>
+</html>

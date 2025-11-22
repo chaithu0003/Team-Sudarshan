@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="student.css">
+</head>
+<body>
+    <header>
+        <div class="container flex-between">
+            <div class="logo"><a href="index.html"><i class="fa-solid fa-passport"></i> SkillsPassport</a></div>
+            <div class="nav-links">
+                <div class="theme-toggle" id="themeToggle"><i class="fa-solid fa-moon"></i></div>
+                <button id="connectWalletBtn" class="btn btn-outline btn-sm">0x71...3A9</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container dashboard-grid">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="avatar"><i class="fa-solid fa-user-graduate"></i></div>
+                <h3>Alex Johnson</h3>
+                <p class="text-muted">ID: 88219</p>
+            </div>
+            <button class="tab-btn active" data-target="tab-overview"><i class="fa-solid fa-chart-pie"></i> Overview</button>
+            <button class="tab-btn" data-target="tab-creds"><i class="fa-solid fa-certificate"></i> Credentials</button>
+            <button class="tab-btn" data-target="tab-settings"><i class="fa-solid fa-cog"></i> Settings</button>
+        </aside>
+
+        <main>
+            <div id="tab-overview" class="tab-content active">
+                <div class="dash-card">
+                    <div class="flex-between">
+                        <h2>Skill Analysis</h2>
+                        <button class="btn btn-sm btn-outline" onclick="exportPDF()"><i class="fa-solid fa-download"></i> Report</button>
+                    </div>
+                    <br>
+                    <div class="skill-bar-container">
+                        <div class="skill-info"><span>Blockchain Dev</span><span>90%</span></div>
+                        <div class="progress-bg"><div class="progress-fill" data-width="90%"></div></div>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-info"><span>Frontend (React)</span><span>75%</span></div>
+                        <div class="progress-bg"><div class="progress-fill" data-width="75%"></div></div>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-info"><span>Backend (Node)</span><span>60%</span></div>
+                        <div class="progress-bg"><div class="progress-fill" data-width="60%"></div></div>
+                    </div>
+                </div>
+
+                <div class="dash-card">
+                    <h3>Recent Activity</h3>
+                    <ul style="margin-top:15px;">
+                        <li style="padding:10px 0; border-bottom:1px solid var(--border);">
+                            <i class="fa-solid fa-check-circle" style="color:var(--success)"></i> Verified by Google Inc.
+                            <span style="float:right; font-size:0.8rem; color:var(--text-muted)">2h ago</span>
+                        </li>
+                        <li style="padding:10px 0; border-bottom:1px solid var(--border);">
+                            <i class="fa-solid fa-plus-circle" style="color:var(--primary)"></i> Received "Hackathon Winner"
+                            <span style="float:right; font-size:0.8rem; color:var(--text-muted)">1d ago</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="tab-creds" class="tab-content">
+                <div class="dash-card">
+                    <div class="flex-between">
+                        <div style="display:flex; gap:15px;">
+                            <div style="font-size:2rem; color:var(--primary)"><i class="fa-brands fa-ethereum"></i></div>
+                            <div>
+                                <h4>Bachelor of Science</h4>
+                                <p class="text-muted">Tech University</p>
+                            </div>
+                        </div>
+                        <span class="badge badge-success">On-Chain</span>
+                    </div>
+                </div>
+                </div>
+            
+            <div id="tab-settings" class="tab-content">
+                <div class="dash-card">
+                    <h3>Privacy Settings (ZKP)</h3>
+                    <div class="flex-between" style="margin-top:15px;">
+                        <span>Hide GPA from public verifiers</span>
+                        <input type="checkbox" checked>
+                    </div>
+                    <br>
+                    <div class="flex-between">
+                        <span>Allow automated verification</span>
+                        <input type="checkbox">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
